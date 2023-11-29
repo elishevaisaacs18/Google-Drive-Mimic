@@ -12,28 +12,8 @@
     },
     {
       "id": 3,
-      "userName": "w",
-      "password": "a"
-    },
-    {
-      "id": 4,
-      "userName": "eli",
-      "password": "isaacs"
-    },
-    {
-      "id": 5,
-      "userName": "eli",
-      "password": "isaacs"
-    },
-    {
-      "id": 6,
-      "userName": "eli",
-      "password": "isaacs"
-    },
-    {
-      "id": 7,
-      "userName": "shani",
-      "password": "mash,mush"
+      "userName": "Bret",
+      "password": "hildegard.org"
     }
   ]
 }

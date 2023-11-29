@@ -11,7 +11,7 @@ const Home = ({ sendRequestToDb }) => {
 
   useEffect(() => {
     async function getUserName() {
-      const data = await fetchData(`http://localhost:3000/content/folder/0`);
+      const data = await fetchData(`http://localhost:3000/content/user/${id}`);
       console.log("data.name: ", data);
       setCurrFolderFiles(data);
     }
@@ -21,7 +21,7 @@ const Home = ({ sendRequestToDb }) => {
 
   async function deleteFile(file) {
     try {
-       const deletedFile = await sendRequestToDb(
+      const deletedFile = await sendRequestToDb(
         "DELETE",
         `http://localhost:3000/content/${file.id}`
       );

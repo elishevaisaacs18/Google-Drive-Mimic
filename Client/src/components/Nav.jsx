@@ -15,11 +15,13 @@ const Nav = () => {
 
   useEffect(() => {
     async function getUserName() {
-      // const currUserId = localStorage.getItem("currentUser");
-      const data = await fetchData(`http://localhost:3000/users/1`);
-      //curr user id instead of 1
-      console.log('data.name: ', data.userName)
+      try{
+      const currUserId = localStorage.getItem("currentUser");
+      const data = await fetchData(`http://localhost:3000/users/${currUserId}`);
       setNameOfUser(data.userName);
+      } catch(err){
+        console.error(err)
+      }
     }
     getUserName();
   }, [fetchData]);

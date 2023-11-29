@@ -5,7 +5,7 @@ const Joi = require("joi");
 const path = require("path");
 
 /* GET users listing. */
-router.post("/", async (req, res) => {
+router.post("/confirm-login", async (req, res) => {
   console.log("hi");
   try {
     const schema = Joi.object({
@@ -16,15 +16,15 @@ router.post("/", async (req, res) => {
     if (validationResult.error) {
       return res.status(400).send(validationResult.error.details[0].message);
     }
-    const addedUser = await addUser(req.body);
+    const addedUser = await confirmUser(req.body);
     res.status(200).send(addedUser);
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
     res.status(500).send("Internal Server Error");
   }
 });
 
-async function addUser(reqBody) {
+async function confirmUser(reqBody) {
   const rawData = await fsPromises.readFile(
     path.join(__dirname, "../resources/users.json"),
     "utf-8"
@@ -34,24 +34,17 @@ async function addUser(reqBody) {
     (user) =>
       user.userName == reqBody.userName && user.password == reqBody.password
   );
-  console.log("userExist: ", userExist);
   if (userExist) {
     return userExist;
   } else {
-    const newId = data.users.length + 1;
-    const newUser = {
-      id: newId,
-      userName: reqBody.userName,
-      password: reqBody.password,
-    };
-    data.users.push(newUser);
-    await fsPromises.writeFile(
-      path.join(__dirname, "../resources/users.json"),
-      JSON.stringify(data, null, 2),
-      "utf-8"
-    );
-    return newUser;
+    throw new Error("username or password is incorrect");
+    // const newId = data.users.length + 1;
+    // const newUser = {
+    //   id: newId,
+    //   userName: reqBody.userName,
+    //   password: reqBody.password,
   }
+  // data.users.push(newUser);
 }
 
 router.get("/", function (req, res, next) {

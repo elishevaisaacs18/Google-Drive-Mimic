@@ -13,6 +13,16 @@ router.get("/folder/:folderId", async function (req, res, next) {
   }
 });
 
+router.get(`/user/:userId`, async function (req, res, next) {
+    const userId = req.params.userId;
+    try {
+      const result = await findContentBy("userId", userId);
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  });
+
 router.get("/:id", async function (req, res, next) {
   const id = req.params.id;
   try {
