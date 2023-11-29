@@ -1,0 +1,66 @@
+{
+  "content": [
+    {
+      "id": "0",
+      "userId": "1",
+      "name": "main-folder",
+      "currFolder": "root",
+      "deleted": false
+    },
+    {
+      "id": "0",
+      "userId": "1",
+      "name": "file1",
+      "currFolder": "main-folder",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    },
+    {
+      "id": "1",
+      "userId": "1",
+      "name": "file2",
+      "currFolder": "main-folder",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "name": "file3",
+      "currFolder": "main-folder",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    },
+    {
+      "id": "0",
+      "userId": "2",
+      "name": "main-folder",
+      "currFolder": "root",
+      "deleted": false
+    },
+    {
+      "id": "0",
+      "userId": "2",
+      "name": "file1",
+      "currFolder": "main-folder",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    },
+    {
+      "id": "1",
+      "userId": "2",
+      "name": "file2",
+      "currFolder": "main-folder",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    },
+    {
+      "id": "2",
+      "userId": "2",
+      "name": "file3",
+      "currFolder": "main-folder",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    }
+  ]
+}
