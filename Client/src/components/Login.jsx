@@ -31,7 +31,6 @@ function Login() {
       userName: username,
       password: password,
     });
-    console.log("data: ", data);
     return data;
   }
 
