@@ -2,15 +2,15 @@ var express = require("express");
 var router = express.Router();
 const fsPromises = require("fs/promises");
 
-router.get("/folder/:folderId",async function (req, res, next) {
-    //get all content in folder
-    const folderId = req.params.folderId;
-    try {
-      const result = await findContentBy("currFolder",folderId);
-      res.status(200).send(result);
-    } catch (err) {
-      res.status(500).send(err.message);
-    }
+router.get("/folder/:folderId", async function (req, res, next) {
+  //get all content in folder
+  const folderId = req.params.folderId;
+  try {
+    const result = await findContentBy("currFolder", folderId);
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
 router.get("/:id", async function (req, res, next) {
@@ -26,7 +26,7 @@ router.get("/:id", async function (req, res, next) {
 async function findContentBy(paramName, value) {
   try {
     const rawData = await fsPromises.readFile(
-      `/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/content.json`,
+      `/home/shani/projects/Google-Drive-Mimic/Server/resources/content.json`,
       "utf-8"
     );
     const data = JSON.parse(rawData)["content"];

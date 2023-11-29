@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../assets/customHooks/useFetch.jsx";
 
-function Login() {
+function Login({ sendRequestToDb }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState(false);
@@ -44,17 +44,6 @@ function Login() {
     } else {
       setIncorrect(true);
     }
-  }
-
-  async function sendRequestToDb(requestType, url, body) {
-    const response = await fetchData(url, {
-      method: requestType,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    return response;
   }
 
   function handleInput(e, currState) {

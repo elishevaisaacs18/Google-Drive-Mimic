@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
 
 async function addUser(reqBody) {
   const rawData = await fsPromises.readFile(
-    "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json",
+    "/home/shani/projects/Google-Drive-Mimic/Server/resources/users.json",
     "utf-8"
   );
   const data = JSON.parse(rawData);
@@ -45,7 +45,7 @@ async function addUser(reqBody) {
     };
     data.users.push(newUser);
     await fsPromises.writeFile(
-      "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json",
+      "/home/shani/projects/Google-Drive-Mimic/Server/resources/users.json",
       JSON.stringify(data, null, 2),
       "utf-8"
     );
@@ -55,7 +55,7 @@ async function addUser(reqBody) {
 
 router.get("/", function (req, res, next) {
   res.sendFile(
-    "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json"
+    "/home/shani/projects/Google-Drive-Mimic/Server/resources/users.json"
   );
 });
 
@@ -72,7 +72,7 @@ router.get("/:id", async function (req, res, next) {
 async function findUserBy(id) {
   try {
     const rawData = await fsPromises.readFile(
-      `/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json`,
+      `/home/shani/projects/Google-Drive-Mimic/Server/resources/users.json`,
       "utf-8"
     );
     const data = JSON.parse(rawData)["users"];

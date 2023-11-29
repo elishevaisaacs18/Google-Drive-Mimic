@@ -29,6 +29,11 @@
       "id": 6,
       "userName": "eli",
       "password": "isaacs"
+    },
+    {
+      "id": 7,
+      "userName": "shani",
+      "password": "mash,mush"
     }
   ]
 }
