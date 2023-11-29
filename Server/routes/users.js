@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const fsPromises = require("fs/promises");
 const Joi = require("joi");
+const path = require("path");
 
 /* GET users listing. */
 router.post("/", async (req, res) => {
@@ -25,7 +26,7 @@ router.post("/", async (req, res) => {
 
 async function addUser(reqBody) {
   const rawData = await fsPromises.readFile(
-    "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json",
+    path.join(__dirname, "../resources/users.json"),
     "utf-8"
   );
   const data = JSON.parse(rawData);
@@ -45,7 +46,7 @@ async function addUser(reqBody) {
     };
     data.users.push(newUser);
     await fsPromises.writeFile(
-      "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json",
+      path.join(__dirname, "../resources/users.json"),
       JSON.stringify(data, null, 2),
       "utf-8"
     );
@@ -54,9 +55,8 @@ async function addUser(reqBody) {
 }
 
 router.get("/", function (req, res, next) {
-  res.sendFile(
-    "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json"
-  );
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname, "../resources/users.json"));
 });
 
 router.get("/:id", async function (req, res, next) {
@@ -72,7 +72,7 @@ router.get("/:id", async function (req, res, next) {
 async function findUserBy(id) {
   try {
     const rawData = await fsPromises.readFile(
-      `/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json`,
+      path.join(__dirname, "../resources/users.json"),
       "utf-8"
     );
     const data = JSON.parse(rawData)["users"];
