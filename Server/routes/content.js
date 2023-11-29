@@ -14,20 +14,32 @@ router.get("/folder/:folderId", async function (req, res, next) {
 });
 
 router.get(`/user/:userId`, async function (req, res, next) {
-    const userId = req.params.userId;
-    try {
-      const result = await findContentBy("userId", userId);
-      res.status(200).send(result);
-    } catch (err) {
-      res.status(500).send(err.message);
-    }
-  });
+  const userId = req.params.userId;
+  try {
+    const result = await findContentBy("userId", userId);
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
 router.get("/:id", async function (req, res, next) {
   const id = req.params.id;
   try {
     const result = await findContentBy("id", id);
     res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+router.get("/:id/info", async function (req, res, next) {
+  const id = req.params.id;
+  try {
+    const result = await findContentBy("id", id);
+    const data = await readFile(path.join(__dirname, result[0].link), "utf-8");
+    res.writeHead(200, { "Content-Type": "text/plain" }); 
+    res.end(data);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -59,32 +71,32 @@ router.delete("/:id", async function (req, res, next) {
 });
 
 router.patch("/:id", async function (req, res, next) {
-    const id = req.params.id;
-    try {
-      const fileToRename = await findContentBy("id", id);
-      if (fileToRename.length === 0) {
-        return res.status(404).send("Content not found");
-      }
-      const rawData = await readFile(
-        path.join(__dirname, "../resources/content.json"),
-        "utf-8"
-      );
-      const data = JSON.parse(rawData);
-      data["content"].find(content=>content.id == id).name = req.body.name
-      console.log('data: ', data)
+  const id = req.params.id;
+  try {
+    const fileToRename = await findContentBy("id", id);
+    if (fileToRename.length === 0) {
+      return res.status(404).send("Content not found");
+    }
+    const rawData = await readFile(
+      path.join(__dirname, "../resources/content.json"),
+      "utf-8"
+    );
+    const data = JSON.parse(rawData);
+    data["content"].find((content) => content.id == id).name = req.body.name;
+    console.log("data: ", data);
     //   const updatedContent = data.content.filter((content) => content.id !== id);
     //   data.content = updatedContent;
-      await writeFile(
-        path.join(__dirname, "../resources/content.json"),
-        JSON.stringify(data, null, 2),
-        "utf-8"
-      );
-      const newFile = data["content"].find(content=>content.id == id)
-      res.status(200).send(newFile);
-    } catch (err) {
-      res.status(500).send(err.message);
-    }
-  });
+    await writeFile(
+      path.join(__dirname, "../resources/content.json"),
+      JSON.stringify(data, null, 2),
+      "utf-8"
+    );
+    const newFile = data["content"].find((content) => content.id == id);
+    res.status(200).send(newFile);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
 async function findContentBy(paramName, value) {
   try {
