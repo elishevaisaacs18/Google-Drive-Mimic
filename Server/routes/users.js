@@ -1,8 +1,58 @@
 var express = require("express");
 var router = express.Router();
 const fsPromises = require("fs/promises");
+const Joi = require("joi");
 
 /* GET users listing. */
+router.post("/", async (req, res) => {
+  console.log("hi");
+  try {
+    const schema = Joi.object({
+      userName: Joi.string().required(),
+      password: Joi.string().required(),
+    });
+    const validationResult = schema.validate(req.body);
+    if (validationResult.error) {
+      return res.status(400).send(validationResult.error.details[0].message);
+    }
+    const addedUser = await addUser(req.body);
+    res.status(200).send(addedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+async function addUser(reqBody) {
+  const rawData = await fsPromises.readFile(
+    "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json",
+    "utf-8"
+  );
+  const data = JSON.parse(rawData);
+  const userExist = data.users.find(
+    (user) =>
+      user.userName == reqBody.userName && user.password == reqBody.password
+  );
+  console.log("userExist: ", userExist);
+  if (userExist) {
+    return userExist;
+  } else {
+    const newId = data.users.length + 1;
+    const newUser = {
+      id: newId,
+      userName: reqBody.userName,
+      password: reqBody.password,
+    };
+    data.users.push(newUser);
+    await fsPromises.writeFile(
+      "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json",
+      JSON.stringify(data, null, 2),
+      "utf-8"
+    );
+    return newUser;
+  }
+}
+
 router.get("/", function (req, res, next) {
   res.sendFile(
     "/home/hilma/HilmaCourse/Google-Drive-Mimic/Server/resources/users.json"

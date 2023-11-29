@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Nav from "./Nav";
 
-const Layout = ({ setShowPost, setShowAlbum }) => {
+const Layout = () => {
   return (
     <div>
-      <Nav setShowPost={setShowPost} setShowAlbum={setShowAlbum} />
+      <Nav/>
       <Outlet />
     </div>
   );

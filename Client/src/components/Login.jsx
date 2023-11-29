@@ -26,23 +26,36 @@ function Login() {
     "]",
   ];
 
-  async function getUserDetails() {
-    const data = await fetchData(
-      `http://localhost:3000/users?username=${username}`
-    );
+  async function postUserDetails() {
+    const data = await sendRequestToDb("POST", `http://localhost:3000/users`, {
+      userName: username,
+      password: password,
+    });
+    console.log("data: ", data);
     return data;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const data = await getUserDetails();
-    if (data.length > 0 && password === data[0].website) {
+    const data = await postUserDetails();
+    if (data.userName == username && data.password == password) {
       setIncorrect(false);
-      localStorage.setItem("currentUser", data[0].id);
-      navigate(`/home/${data[0].id}`);
+      localStorage.setItem("currentUser", data.id);
+      navigate(`/home/${data.id}`);
     } else {
       setIncorrect(true);
     }
+  }
+
+  async function sendRequestToDb(requestType, url, body) {
+    const response = await fetchData(url, {
+      method: requestType,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    return response;
   }
 
   function handleInput(e, currState) {
