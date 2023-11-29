@@ -13,14 +13,16 @@ const Nav = ({ setShowPost, setShowAlbum }) => {
     navigate(`/login`);
   }
 
-  useEffect(() => {
-    async function getUserName() {
-      const currUserId = localStorage.getItem("currentUser");
-      const data = await fetchData(`http://localhost:3000/users/${currUserId}`);
-      setNameOfUser(data.name);
-    }
-    getUserName();
-  }, [fetchData]);
+  // useEffect(() => {
+  //   async function getUserName() {
+  //     // const currUserId = localStorage.getItem("currentUser");
+  //     const data = await fetchData(`http://localhost:3000/users/1`);
+  //     //curr user id instead of 1
+  //     console.log('data.name: ', data.userName)
+  //     setNameOfUser(data.userName);
+  //   }
+  //   getUserName();
+  // }, [fetchData]);
 
   return (
     <nav>
@@ -31,33 +33,6 @@ const Nav = ({ setShowPost, setShowAlbum }) => {
         onClick={() => navigate(`/home/${id}/info/`)}
       >
         Info
-      </button>
-      <button
-        type="button"
-        className="navBtn"
-        onClick={() => navigate(`/home/${id}/todos/`)}
-      >
-        Todos
-      </button>
-      <button
-        type="button"
-        className="navBtn"
-        onClick={() => {
-          setShowPost(false);
-          navigate(`/home/${id}/posts/`);
-        }}
-      >
-        Posts
-      </button>
-      <button
-        type="button"
-        className="navBtn"
-        onClick={() => {
-          setShowAlbum(false);
-          navigate(`/home/${id}/albums/`);
-        }}
-      >
-        Albums
       </button>
       <button type="button" className="navBtn" onClick={logout}>
         Logout

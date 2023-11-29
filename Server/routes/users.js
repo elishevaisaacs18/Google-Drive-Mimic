@@ -17,7 +17,6 @@ router.get("/:id", async function (req, res, next) {
   } catch (err) {
     res.status(500).send(err.message);
   }
-  res.send();
 });
 
 async function findUserBy(id) {

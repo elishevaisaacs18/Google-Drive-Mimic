@@ -8,57 +8,57 @@
       "deleted": false
     },
     {
-      "id": "0",
-      "userId": "1",
-      "name": "file1",
-      "currFolder": "main-folder",
-      "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
-    },
-    {
       "id": "1",
       "userId": "1",
-      "name": "file2",
-      "currFolder": "main-folder",
+      "name": "file1",
+      "currFolder": "0",
       "deleted": false,
       "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
     },
     {
       "id": "2",
       "userId": "1",
-      "name": "file3",
-      "currFolder": "main-folder",
+      "name": "file2",
+      "currFolder": "0",
       "deleted": false,
       "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
     },
     {
-      "id": "0",
+      "id": "3",
+      "userId": "1",
+      "name": "file3",
+      "currFolder": "0",
+      "deleted": false,
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+    },
+    {
+      "id": "4",
       "userId": "2",
       "name": "main-folder",
       "currFolder": "root",
       "deleted": false
     },
     {
-      "id": "0",
+      "id": "5",
       "userId": "2",
       "name": "file1",
-      "currFolder": "main-folder",
+      "currFolder": "4",
       "deleted": false,
       "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
     },
     {
-      "id": "1",
+      "id": "6",
       "userId": "2",
       "name": "file2",
-      "currFolder": "main-folder",
+      "currFolder": "4",
       "deleted": false,
       "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
     },
     {
-      "id": "2",
+      "id": "7",
       "userId": "2",
       "name": "file3",
-      "currFolder": "main-folder",
+      "currFolder": "4",
       "deleted": false,
       "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
     }
