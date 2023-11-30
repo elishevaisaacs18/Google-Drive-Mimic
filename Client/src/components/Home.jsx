@@ -1,135 +1,3 @@
-// import { Outlet } from "react-router-dom";
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import useFetch from "../assets/customHooks/useFetch";
-
-// const Home = ({ sendRequestToDb }) => {
-//   const fetchData = useFetch;
-//   const [currFolderFiles, setCurrFolderFiles] = useState();
-//   const [rename, setRename] = useState();
-//   const { id } = useParams();
-//   const [fileContent, setFileContent] = useState([]);
-
-//   useEffect(() => {
-//     async function getUserName() {
-//       const data = await fetchData(`http://localhost:3000/content/user/${id}`);
-//       console.log("data.name: ", data);
-//       setCurrFolderFiles(data);
-//     }
-//     getUserName();
-//   }, [fetchData]);
-
-//   useEffect(() => {
-//     async function getUserName() {
-//       const data = await fetchData(`http://localhost:3000/content/user/${id}`);
-//       console.log("data.name: ", data);
-//       setCurrFolderFiles(data);
-//     }
-//     getUserName();
-//   }, [fetchData]);
-
-//   console.log("currFolderFiles: ", currFolderFiles);
-
-//   async function deleteFile(file) {
-//     try {
-//       const deletedFile = await sendRequestToDb(
-//         "DELETE",
-//         `http://localhost:3000/content/${file.id}`
-//       );
-//       setCurrFolderFiles((prev) => {
-//         const copy = [...prev];
-//         copy.map((item) => {
-//           if (item.id === file.id) {
-//             item.deleted = true;
-//           }
-//         });
-//         console.log("✌️copy --->", copy);
-//         return copy;
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   async function renameFile(file) {
-//     try {
-//       const fileToRename = await sendRequestToDb(
-//         "PATCH",
-//         `http://localhost:3000/content/${file.id}`,
-//         { name: rename }
-//       );
-//       setCurrFolderFiles((prev) => {
-//         const copy = [...prev];
-//         copy.filter((item) => {
-//           item.name = rename;
-//         });
-//         return copy;
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   function showFileDetails() {
-//     console.log("details");
-//   }
-
-//   function duplicateFile() {
-//     console.log("duplicate");
-//   }
-
-//   // const photosList = currFolderFiles?.map((file, index) => {
-//   //   return (
-//   //     <div key={index}>
-//   //       <h2>{file.name}</h2>
-//   //       <button onClick={() => deleteFile(file)}>Delete File</button>
-//   //       <button onClick={() => showFileDetails(file)}>Show Details</button>
-//   //       <button onClick={() => renameFile(file)}>Rename File</button>
-//   //       <button onClick={() => duplicateFile(file)}>Duplicate File</button>
-
-//   //       <img style={{ width: "200px", display: "block" }} src={file.link} />
-//   //     </div>
-//   //   );
-//   // });
-//   return (
-//     <>
-//       {currFolderFiles?.map(async (file, index) => {
-//         if(file.info){
-//         const fileAfterReading = await fetchData(`http://localhost:3000/content/${file.id}/info`)
-//         console.log('fileAfterReading: ', fileAfterReading)
-//         setFileContent((prev) => [...prev, fileAfterReading]);
-//         }
-//         if (file.deleted == false) {
-//           return (
-//             <div key={index}>
-//               <h2>{file.name}</h2>
-//               <button onClick={() => deleteFile(file)}>Delete File</button>
-//               <button onClick={() => showFileDetails(file)}>
-//                 Show Details
-//               </button>
-//               <button onClick={() => renameFile(file)}>Rename File</button>
-//               <input
-//                 type="text"
-//                 name="rename"
-//                 onChange={(e) => setRename(e.target.value)}
-//               ></input>
-//               <button onClick={() => duplicateFile(file)}>
-//                 Duplicate File
-//               </button>
-
-//               {JSON.stringify(fileContent[index])}
-//             </div>
-//           );
-//         }
-//       })}
-//       {/* {photosList} */}
-//       <Outlet />
-//     </>
-//   );
-// };
-
-// export default Home;
-
 import { Outlet } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -141,6 +9,7 @@ const Home = ({ sendRequestToDb }) => {
   const [rename, setRename] = useState("");
   const { id } = useParams();
   const [fileContent, setFileContent] = useState([]);
+  const [fileDetails, setFileDetails] = useState("");
 
   useEffect(() => {
     const getUserName = async () => {
@@ -155,8 +24,6 @@ const Home = ({ sendRequestToDb }) => {
     };
     getUserName();
   }, [fetchData, id]);
-
-  console.log("currFolderFiles: ", currFolderFiles);
 
   const deleteFile = async (file) => {
     try {
@@ -191,38 +58,50 @@ const Home = ({ sendRequestToDb }) => {
     }
   };
 
-  const showFileDetails = () => {
-    console.log("details");
+  const showFileDetails = (file) => {
+    const type = file.link ? "file" : "folder";
+    setFileDetails(
+      ` File Details: userId: ${file.userId}, currFolder: ${file.currFolder}, type: ${type}`
+    );
   };
 
-  const duplicateFile = () => {
-    console.log("duplicate");
+  const duplicateFile = async () => {
+    try {
+     const newFile = await sendRequestToDb("POST", `http://localhost:3000/content`, {
+        userId:"2",
+        currFolder: "4",
+        name: "aaaaaaaaaa",
+        link:"../files/file1.txt"
+        });
+      setCurrFolderFiles((prev) => [...prev, newFile]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
     const fetchDataAndUpdateFileContent = async () => {
-      const newFileContent = await Promise.all(
-        currFolderFiles.map(async (file) => {
-          if (file.link) {
-            console.log('file: ', file.id)
-            try {
-              const fileAfterReading = await fetchData(
-                `http://localhost:3000/content/${file.id}/info`
-              );
-              return fileAfterReading;
-            } catch (err) {
-              console.error(err);
-              return null;
-            }
+      const newFileContent = [];  
+      for (const file of currFolderFiles) {
+        if (file.link) {
+          try {
+            const fileAfterReading = await fetchData(
+              `http://localhost:3000/content/${file.id}/info`
+            );
+            newFileContent.push(fileAfterReading);
+          } catch (err) {
+            console.error(`Error fetching file ${file.id}:`, err);
+            newFileContent.push(null);
           }
-          return null;
-        })
-      );
-
+        } else {
+          newFileContent.push(null);
+        }
+      }
+    
+      console.log('newFileContent: ', newFileContent);
       setFileContent(newFileContent);
-      console.log('newFileContent: ', newFileContent)
-      console.log(fileContent);
     };
+    
 
     fetchDataAndUpdateFileContent();
   }, [currFolderFiles, fetchData]);
@@ -230,7 +109,6 @@ const Home = ({ sendRequestToDb }) => {
   return (
     <>
       {currFolderFiles.map((file, index) => {
-        console.log("content: ",fileContent[index])
         if (!file.deleted) {
           return (
             <div key={index}>
@@ -239,6 +117,7 @@ const Home = ({ sendRequestToDb }) => {
               <button onClick={() => showFileDetails(file)}>
                 Show Details
               </button>
+              <br />
               <button onClick={() => renameFile(file)}>Rename File</button>
               <input
                 type="text"
@@ -246,9 +125,12 @@ const Home = ({ sendRequestToDb }) => {
                 value={rename}
                 onChange={(e) => setRename(e.target.value)}
               ></input>
+              <br />
               <button onClick={() => duplicateFile(file)}>
                 Duplicate File
               </button>
+              <br />
+              <h4>{fileDetails}</h4>
               {fileContent[index]}
             </div>
           );
