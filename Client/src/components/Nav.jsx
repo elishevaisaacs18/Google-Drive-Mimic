@@ -1,8 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../assets/customHooks/useFetch.jsx";
 import { useEffect, useState } from "react";
+// import { useHistory } from 'react-router-dom';
 
 const Nav = () => {
+  // const history = useHistory();
   const navigate = useNavigate();
   const { id } = useParams();
   const fetchData = useFetch;
@@ -11,6 +13,8 @@ const Nav = () => {
   function logout() {
     localStorage.setItem("currentUser", "");
     navigate(`/login`);
+    // history.push('/login');
+    // history.replace('/login');
   }
 
   useEffect(() => {
