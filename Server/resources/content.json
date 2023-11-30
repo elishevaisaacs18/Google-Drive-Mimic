@@ -24,6 +24,14 @@
       "link": "../files/file1.txt"
     },
     {
+      "id": "3",
+      "userId": "1",
+      "name": "File three",
+      "currFolder": "0",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
       "id": "4",
       "userId": "2",
       "name": "main-folder",
@@ -49,79 +57,25 @@
     {
       "id": "8",
       "userId": "1",
-      "name": "aaa",
+      "name": "folder1",
       "currFolder": "0",
       "deleted": false
     },
     {
       "id": "9",
       "userId": "1",
-      "name": "File four",
+      "name": "file in folder",
       "currFolder": "8",
       "deleted": false,
       "link": "../files/file1.txt"
     },
     {
-      "id": "10",
+      "id": "9",
       "userId": "1",
-      "name": "File five",
+      "name": "file in folder",
       "currFolder": "8",
       "deleted": false,
       "link": "../files/file1.txt"
-    },
-    {
-      "id": "11",
-      "userId": "1",
-      "name": "Folder three",
-      "currFolder": "8",
-      "deleted": false
-    },
-    {
-      "id": "12",
-      "userId": "1",
-      "name": "File six",
-      "currFolder": "11",
-      "deleted": false,
-      "link": "../files/file1.txt"
-    },
-    {
-      "id": "13",
-      "userId": "1",
-      "name": "File seven",
-      "currFolder": "11",
-      "deleted": false,
-      "link": "../files/file1.txt"
-    },
-    {
-      "id": "14",
-      "userId": "1",
-      "name": "Folder four",
-      "currFolder": "8",
-      "deleted": false
-    },
-    {
-      "id": "15",
-      "userId": "1",
-      "name": "File eight",
-      "currFolder": "14",
-      "deleted": false,
-      "link": "../files/file1.txt"
-    },
-    {
-      "id": "16",
-      "userId": "1",
-      "name": "File nine",
-      "currFolder": "14",
-      "deleted": false,
-      "link": "../files/file1.txt"
-    },
-    {
-      "id": 16,
-      "userId": "1",
-      "name": "File two",
-      "currFolder": "0",
-      "link": "../files/file1.txt",
-      "deleted": false
     }
   ]
 }
