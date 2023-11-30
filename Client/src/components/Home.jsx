@@ -65,14 +65,20 @@ const Home = ({ sendRequestToDb }) => {
     );
   };
 
-  const duplicateFile = async () => {
+  const duplicateFile = async (file) => {
+    console.log("file: ", file);
+    const fileToSend = {
+      currFolder: file.currFolder,
+      link: file.link,
+      name: file.name,
+      userId: file.userId,
+    };
     try {
-     const newFile = await sendRequestToDb("POST", `http://localhost:3000/content`, {
-        userId:"2",
-        currFolder: "4",
-        name: "aaaaaaaaaa",
-        link:"../files/file1.txt"
-        });
+      const newFile = await sendRequestToDb(
+        "POST",
+        `http://localhost:3000/content`,
+        fileToSend
+      );
       setCurrFolderFiles((prev) => [...prev, newFile]);
     } catch (err) {
       console.error(err);
@@ -81,7 +87,7 @@ const Home = ({ sendRequestToDb }) => {
 
   useEffect(() => {
     const fetchDataAndUpdateFileContent = async () => {
-      const newFileContent = [];  
+      const newFileContent = [];
       for (const file of currFolderFiles) {
         if (file.link) {
           try {
@@ -97,11 +103,10 @@ const Home = ({ sendRequestToDb }) => {
           newFileContent.push(null);
         }
       }
-    
-      console.log('newFileContent: ', newFileContent);
+
+      console.log("newFileContent: ", newFileContent);
       setFileContent(newFileContent);
     };
-    
 
     fetchDataAndUpdateFileContent();
   }, [currFolderFiles, fetchData]);
