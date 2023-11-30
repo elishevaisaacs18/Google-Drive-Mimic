@@ -24,7 +24,6 @@ const Home = ({ sendRequestToDb }) => {
                 `http://localhost:3000/content/folder/${item.id}`
               );
               setCurrFolderFiles(currentFiles);
-              // setFolderTree((prev) => [...prev], item.id);
             } catch (err) {
               console.log(err);
             }
@@ -37,14 +36,14 @@ const Home = ({ sendRequestToDb }) => {
     getUserName();
   }, [fetchData, id]);
 
-  async function handleOpenFolder(folder) {
+  async function handleOpenFolder(folder, fullFolder) {
+    console.log("✌️fullFolder --->", fullFolder);
     try {
       const folderFiles = await sendRequestToDb(
         "GET",
         `http://localhost:3000/content/folder/${folder}`
       );
       setCurrFolderFiles(folderFiles);
-      // debugger;
       setFolderTree((prev) => [...prev, folder]);
     } catch (err) {
       console.log(err);
@@ -67,19 +66,18 @@ const Home = ({ sendRequestToDb }) => {
     }
   };
 
-  function handleBack(folder) {
-    // debugger;
+  function handleBack(folder, fullFolder) {
     if ((folder === "0" && folderTree.length === 1) || folder == 0) {
       return console.log("root folder");
     } else {
       const correntFolderIndex = folderTree.findIndex(
         (element) => parseInt(element) === parseInt(folder)
       );
-      handleOpenFolder(folderTree[correntFolderIndex - 1]);
+      handleOpenFolder(folderTree[correntFolderIndex - 1], fullFolder);
       setFolderTree((prev) => {
         let copy = [...prev];
         copy.pop();
-        setFolderTree(copy);
+        return copy;
       });
     }
   }
@@ -180,7 +178,7 @@ const Home = ({ sendRequestToDb }) => {
                 {!file.link ? (
                   <button
                     style={{ backgroundColor: "violet" }}
-                    onClick={() => handleOpenFolder(file.id)}
+                    onClick={() => handleOpenFolder(file.id, file)}
                   >
                     Open Folder
                   </button>
