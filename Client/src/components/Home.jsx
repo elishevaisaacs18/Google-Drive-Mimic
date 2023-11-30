@@ -146,6 +146,7 @@ const Home = ({ sendRequestToDb }) => {
           }
         }
       }
+
       setFileContent(newFileContent);
     };
 
