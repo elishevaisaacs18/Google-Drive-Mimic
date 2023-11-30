@@ -3,13 +3,14 @@
     {
       "id": "0",
       "userId": "1",
-      "name": "main-folder",
+      "name": "jkk",
       "currFolder": "root",
       "deleted": false
     },
     {
       "id": "1",
       "userId": "1",
+      "name": "File one",
       "currFolder": "0",
       "deleted": false,
       "link": "../files/file1.txt"
@@ -17,7 +18,7 @@
     {
       "id": "2",
       "userId": "1",
-      "name": "d",
+      "name": "File two",
       "currFolder": "0",
       "deleted": false,
       "link": "../files/file1.txt"
@@ -25,7 +26,7 @@
     {
       "id": "3",
       "userId": "1",
-      "name": "file 2",
+      "name": "File three",
       "currFolder": "0",
       "deleted": false,
       "link": "../files/file1.txt"
@@ -58,6 +59,75 @@
       "userId": "2",
       "name": "file3",
       "currFolder": "4",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "8",
+      "userId": "1",
+      "name": "Folder 2",
+      "currFolder": "0",
+      "deleted": false
+    },
+    {
+      "id": "9",
+      "userId": "1",
+      "name": "File four",
+      "currFolder": "8",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "10",
+      "userId": "1",
+      "name": "File five",
+      "currFolder": "8",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "11",
+      "userId": "1",
+      "name": "Folder three",
+      "currFolder": "8",
+      "deleted": false
+    },
+    {
+      "id": "12",
+      "userId": "1",
+      "name": "File six",
+      "currFolder": "11",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "13",
+      "userId": "1",
+      "name": "File seven",
+      "currFolder": "11",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "14",
+      "userId": "1",
+      "name": "Folder four",
+      "currFolder": "8",
+      "deleted": false
+    },
+    {
+      "id": "15",
+      "userId": "1",
+      "name": "File eight",
+      "currFolder": "14",
+      "deleted": false,
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "16",
+      "userId": "1",
+      "name": "File nine",
+      "currFolder": "14",
       "deleted": false,
       "link": "../files/file1.txt"
     }

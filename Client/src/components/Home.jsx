@@ -138,7 +138,7 @@ import useFetch from "../assets/customHooks/useFetch";
 const Home = ({ sendRequestToDb }) => {
   const fetchData = useFetch; // Correctly invoke the custom hook
   const [currFolderFiles, setCurrFolderFiles] = useState([]);
-  const [rename, setRename] = useState("");
+  const [folderTree, setFolderTree] = useState([0]);
   const { id } = useParams();
   const [fileContent, setFileContent] = useState([]);
 
@@ -148,7 +148,19 @@ const Home = ({ sendRequestToDb }) => {
         const data = await fetchData(
           `http://localhost:3000/content/user/${id}`
         );
-        setCurrFolderFiles(data);
+        data.map(async (item) => {
+          if (item.currFolder === "root") {
+            try {
+              const currentFiles = await fetchData(
+                `http://localhost:3000/content/folder/${item.id}`
+              );
+              setCurrFolderFiles(currentFiles);
+              // setFolderTree((prev) => [...prev], item.id);
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        });
       } catch (err) {
         console.error(err);
       }
@@ -157,6 +169,21 @@ const Home = ({ sendRequestToDb }) => {
   }, [fetchData, id]);
 
   console.log("currFolderFiles: ", currFolderFiles);
+
+  async function handleOpenFolder(folder) {
+    try {
+      const folderFiles = await sendRequestToDb(
+        "GET",
+        `http://localhost:3000/content/folder/${folder}`
+      );
+      setCurrFolderFiles(folderFiles);
+      // debugger;
+      setFolderTree((prev) => [...prev, folder]);
+      console.log(folderTree);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const deleteFile = async (file) => {
     try {
@@ -174,16 +201,34 @@ const Home = ({ sendRequestToDb }) => {
     }
   };
 
+  function handleBack(folder) {
+    // debugger;
+    if ((folder === "0" && folderTree.length === 1) || folder == 0) {
+      return console.log("root folder");
+    } else {
+      const correntFolderIndex = folderTree.findIndex(
+        (element) => parseInt(element) === parseInt(folder)
+      );
+      handleOpenFolder(folderTree[correntFolderIndex - 1]);
+      setFolderTree((prev) => {
+        let copy = [...prev];
+        copy.pop();
+        setFolderTree(copy);
+      });
+    }
+  }
+
   const renameFile = async (file) => {
+    const newName = prompt("name");
     try {
       await sendRequestToDb(
         "PATCH",
         `http://localhost:3000/content/${file.id}`,
-        { name: rename }
+        { name: newName }
       );
       setCurrFolderFiles((prev) =>
         prev.map((item) =>
-          item.id === file.id ? { ...item, name: rename } : item
+          item.id === file.id ? { ...item, name: newName } : item
         )
       );
     } catch (err) {
@@ -229,32 +274,39 @@ const Home = ({ sendRequestToDb }) => {
 
   return (
     <>
-      {currFolderFiles.map((file, index) => {
-        console.log("content: ", fileContent[index]);
-        if (!file.deleted) {
-          return (
-            <div key={index}>
-              <h2>{file.name}</h2>
-              <button onClick={() => deleteFile(file)}>Delete File</button>
-              <button onClick={() => showFileDetails(file)}>
-                Show Details
-              </button>
-              <button onClick={() => renameFile(file)}>Rename File</button>
-              <input
-                type="text"
-                name="rename"
-                value={rename}
-                onChange={(e) => setRename(e.target.value)}
-              ></input>
-              <button onClick={() => duplicateFile(file)}>
-                Duplicate File
-              </button>
-              {fileContent[index]}
-            </div>
-          );
-        }
-        return null;
-      })}
+      <button onClick={() => handleBack(currFolderFiles[0].currFolder)}>
+        Back
+      </button>
+      {Object.keys(currFolderFiles) !== 0 &&
+        currFolderFiles.length !== 0 &&
+        currFolderFiles.map((file, index) => {
+          console.log("content: ", fileContent[index]);
+          if (!file.deleted) {
+            return (
+              <div key={index}>
+                <h2>{file.name}</h2>
+                <button onClick={() => deleteFile(file)}>Delete File</button>
+                <button onClick={() => showFileDetails(file)}>
+                  Show Details
+                </button>
+                <button onClick={() => renameFile(file)}>Rename File</button>
+                <button onClick={() => duplicateFile(file)}>
+                  Duplicate File
+                </button>
+                {!file.link ? (
+                  <button
+                    style={{ backgroundColor: "violet" }}
+                    onClick={() => handleOpenFolder(file.id)}
+                  >
+                    Open Folder
+                  </button>
+                ) : null}
+                {fileContent[index]}
+              </div>
+            );
+          }
+          return null;
+        })}
       <Outlet />
     </>
   );
