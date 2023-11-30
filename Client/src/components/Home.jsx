@@ -21,7 +21,7 @@ const Home = ({ sendRequestToDb }) => {
 
   async function deleteFile(file) {
     try {
-       const deletedFile = await sendRequestToDb(
+      const deletedFile = await sendRequestToDb(
         "DELETE",
         `http://localhost:3000/content/${file.id}`
       );
@@ -50,8 +50,11 @@ const Home = ({ sendRequestToDb }) => {
       setCurrFolderFiles((prev) => {
         const copy = [...prev];
         copy.filter((item) => {
-          item.name = rename;
+          if (item.id === file.id) {
+            item.name = rename;
+          }
         });
+        setRename("");
         return copy;
       });
     } catch (err) {

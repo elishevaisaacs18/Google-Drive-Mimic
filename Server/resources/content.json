@@ -10,15 +10,15 @@
     {
       "id": "1",
       "userId": "1",
-      "name": "file1",
       "currFolder": "0",
       "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg",
+      "name": "file 1"
     },
     {
       "id": "3",
       "userId": "1",
-      "name": "file3",
+      "name": "file 2",
       "currFolder": "0",
       "deleted": false,
       "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
