@@ -15,27 +15,22 @@ const Nav = () => {
 
   useEffect(() => {
     async function getUserName() {
-      try{
-      const currUserId = localStorage.getItem("currentUser");
-      const data = await fetchData(`http://localhost:3000/users/${currUserId}`);
-      setNameOfUser(data.userName);
-      } catch(err){
-        console.error(err)
+      try {
+        const currUserId = localStorage.getItem("currentUser");
+        const data = await fetchData(
+          `http://localhost:3000/users/${currUserId}`
+        );
+        setNameOfUser(data.userName);
+      } catch (err) {
+        console.error(err);
       }
     }
     getUserName();
-  }, [fetchData]);
+  }, [fetchData, id]);
 
   return (
     <nav>
       <h3>Hello, {nameOfUser}!</h3>
-      <button
-        type="button"
-        className="navBtn"
-        onClick={() => navigate(`/home/${id}/info/`)}
-      >
-        Info
-      </button>
       <button type="button" className="navBtn" onClick={logout}>
         Logout
       </button>

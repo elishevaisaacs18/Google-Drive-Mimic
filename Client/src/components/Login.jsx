@@ -38,19 +38,21 @@ function Login({ sendRequestToDb }) {
       );
       return data;
     } catch (err) {
-      console.error(err.message);
+      setIncorrect(true);
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const data = await postUserDetails();
-    if (data.userName == username && data.password == password) {
-      setIncorrect(false);
-      localStorage.setItem("currentUser", data.id);
-      navigate(`/home/${data.id}`);
-    } else {
-      setIncorrect(true);
+    try {
+      const data = await postUserDetails();
+      if (data.userName == username && data.password == password) {
+        setIncorrect(false);
+        localStorage.setItem("currentUser", data.id);
+        navigate(`/home/${data.id}`);
+      }
+    } catch (e){
+      console.error(e)
     }
   }
 

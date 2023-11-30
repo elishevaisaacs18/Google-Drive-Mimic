@@ -1,105 +1,120 @@
-// import { Outlet } from "react-router-dom";
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import useFetch from "../assets/customHooks/useFetch";
+import { Outlet } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useFetch from "../assets/customHooks/useFetch";
 
 // const Home = ({ sendRequestToDb }) => {
-//   const fetchData = useFetch;
-//   const [currFolderFiles, setCurrFolderFiles] = useState();
-//   const [rename, setRename] = useState();
+//   const fetchData = useFetch; // Correctly invoke the custom hook
+//   const [currFolderFiles, setCurrFolderFiles] = useState([]);
+//   const [rename, setRename] = useState("");
 //   const { id } = useParams();
 //   const [fileContent, setFileContent] = useState([]);
+//   const [fileDetails, setFileDetails] = useState("");
 
 //   useEffect(() => {
-//     async function getUserName() {
-//       const data = await fetchData(`http://localhost:3000/content/user/${id}`);
-//       console.log("data.name: ", data);
-//       setCurrFolderFiles(data);
-//     }
+//     const getUserName = async () => {
+//       try {
+//         const data = await fetchData(
+//           `http://localhost:3000/content/user/${id}`
+//         );
+//         setCurrFolderFiles(data);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
 //     getUserName();
-//   }, [fetchData]);
+//   }, [fetchData, id]);
 
-//   useEffect(() => {
-//     async function getUserName() {
-//       const data = await fetchData(`http://localhost:3000/content/user/${id}`);
-//       console.log("data.name: ", data);
-//       setCurrFolderFiles(data);
-//     }
-//     getUserName();
-//   }, [fetchData]);
-
-//   console.log("currFolderFiles: ", currFolderFiles);
-
-//   async function deleteFile(file) {
+//   const deleteFile = async (file) => {
 //     try {
-//       const deletedFile = await sendRequestToDb(
+//       await sendRequestToDb(
 //         "DELETE",
 //         `http://localhost:3000/content/${file.id}`
 //       );
-//       setCurrFolderFiles((prev) => {
-//         const copy = [...prev];
-//         copy.map((item) => {
-//           if (item.id === file.id) {
-//             item.deleted = true;
-//           }
-//         });
-//         console.log("✌️copy --->", copy);
-//         return copy;
-//       });
+//       setCurrFolderFiles((prev) =>
+//         prev.map((item) =>
+//           item.id === file.id ? { ...item, deleted: true } : item
+//         )
+//       );
 //     } catch (err) {
-//       console.log(err);
+//       console.error(err);
 //     }
-//   }
+//   };
 
-//   async function renameFile(file) {
+//   const renameFile = async (file) => {
 //     try {
-//       const fileToRename = await sendRequestToDb(
+//       await sendRequestToDb(
 //         "PATCH",
 //         `http://localhost:3000/content/${file.id}`,
 //         { name: rename }
 //       );
-//       setCurrFolderFiles((prev) => {
-//         const copy = [...prev];
-//         copy.filter((item) => {
-//           item.name = rename;
-//         });
-//         return copy;
-//       });
+//       setCurrFolderFiles((prev) =>
+//         prev.map((item) =>
+//           item.id === file.id ? { ...item, name: rename } : item
+//         )
+//       );
 //     } catch (err) {
-//       console.log(err);
+//       console.error(err);
 //     }
-//   }
+//   };
 
-//   function showFileDetails() {
-//     console.log("details");
-//   }
+//   const showFileDetails = (file) => {
+//     const type = file.link ? "file" : "folder";
+//     setFileDetails(
+//       ` File Details: userId: ${file.userId}, currFolder: ${file.currFolder}, type: ${type}`
+//     );
+//   };
 
-//   function duplicateFile() {
-//     console.log("duplicate");
-//   }
+//   const duplicateFile = async (file) => {
+//     console.log("file: ", file);
+//     const fileToSend = {
+//       currFolder: file.currFolder,
+//       link: file.link,
+//       name: file.name,
+//       userId: file.userId,
+//     };
+//     try {
+//       const newFile = await sendRequestToDb(
+//         "POST",
+//         `http://localhost:3000/content`,
+//         fileToSend
+//       );
+//       setCurrFolderFiles((prev) => [...prev, newFile]);
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
 
-//   // const photosList = currFolderFiles?.map((file, index) => {
-//   //   return (
-//   //     <div key={index}>
-//   //       <h2>{file.name}</h2>
-//   //       <button onClick={() => deleteFile(file)}>Delete File</button>
-//   //       <button onClick={() => showFileDetails(file)}>Show Details</button>
-//   //       <button onClick={() => renameFile(file)}>Rename File</button>
-//   //       <button onClick={() => duplicateFile(file)}>Duplicate File</button>
+//   useEffect(() => {
+//     const fetchDataAndUpdateFileContent = async () => {
+//       const newFileContent = [];
+//       for (const file of currFolderFiles) {
+//         if (file.link) {
+//           try {
+//             const fileAfterReading = await fetchData(
+//               `http://localhost:3000/content/${file.id}/info`
+//             );
+//             newFileContent.push(fileAfterReading);
+//           } catch (err) {
+//             console.error(`Error fetching file ${file.id}:`, err);
+//             newFileContent.push(null);
+//           }
+//         } else {
+//           newFileContent.push(null);
+//         }
+//       }
 
-//   //       <img style={{ width: "200px", display: "block" }} src={file.link} />
-//   //     </div>
-//   //   );
-//   // });
+//       console.log("newFileContent: ", newFileContent);
+//       setFileContent(newFileContent);
+//     };
+
+//     fetchDataAndUpdateFileContent();
+//   }, [currFolderFiles, fetchData, id]);
+
 //   return (
 //     <>
-//       {currFolderFiles?.map(async (file, index) => {
-//         if(file.info){
-//         const fileAfterReading = await fetchData(`http://localhost:3000/content/${file.id}/info`)
-//         console.log('fileAfterReading: ', fileAfterReading)
-//         setFileContent((prev) => [...prev, fileAfterReading]);
-//         }
-//         if (file.deleted == false) {
+//       {currFolderFiles.map((file, index) => {
+//         if (!file.deleted) {
 //           return (
 //             <div key={index}>
 //               <h2>{file.name}</h2>
@@ -107,40 +122,42 @@
 //               <button onClick={() => showFileDetails(file)}>
 //                 Show Details
 //               </button>
+//               <br />
 //               <button onClick={() => renameFile(file)}>Rename File</button>
 //               <input
 //                 type="text"
 //                 name="rename"
+//                 value={rename}
 //                 onChange={(e) => setRename(e.target.value)}
 //               ></input>
+//               <br />
 //               <button onClick={() => duplicateFile(file)}>
 //                 Duplicate File
 //               </button>
-
-//               {JSON.stringify(fileContent[index])}
+//               <br />
+//               <h4>{fileDetails}</h4>
+//               {fileContent[index]}
 //             </div>
 //           );
 //         }
+//         return null;
 //       })}
-//       {/* {photosList} */}
 //       <Outlet />
 //     </>
 //   );
 // };
 
-// export default Home;
+// ... (imports remain the same)
 
-import { Outlet } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import useFetch from "../assets/customHooks/useFetch";
+// ... (imports remain the same)
 
 const Home = ({ sendRequestToDb }) => {
-  const fetchData = useFetch; // Correctly invoke the custom hook
+  const fetchData = useFetch;
   const [currFolderFiles, setCurrFolderFiles] = useState([]);
   const [folderTree, setFolderTree] = useState([0]);
   const { id } = useParams();
   const [fileContent, setFileContent] = useState([]);
+  const [fileDetails, setFileDetails] = useState("");
 
   useEffect(() => {
     const getUserName = async () => {
@@ -167,8 +184,6 @@ const Home = ({ sendRequestToDb }) => {
     };
     getUserName();
   }, [fetchData, id]);
-
-  console.log("currFolderFiles: ", currFolderFiles);
 
   async function handleOpenFolder(folder) {
     try {
@@ -236,49 +251,67 @@ const Home = ({ sendRequestToDb }) => {
     }
   };
 
-  const showFileDetails = () => {
-    console.log("details");
+  const showFileDetails = (file) => {
+    const type = file.link ? "file" : "folder";
+    setFileDetails(
+      ` File Details: userId: ${file.userId}, currFolder: ${file.currFolder}, type: ${type}`
+    );
   };
 
-  const duplicateFile = () => {
-    console.log("duplicate");
+  const duplicateFile = async (file) => {
+    const fileToSend = {
+      currFolder: file.currFolder, // Ensure currFolder is correct
+      link: file.link,
+      name: file.name,
+      userId: file.userId,
+    };
+    try {
+      const newFile = await sendRequestToDb(
+        "POST",
+        `http://localhost:3000/content`,
+        fileToSend
+      );
+      setCurrFolderFiles((prev) => [...prev, newFile]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
     const fetchDataAndUpdateFileContent = async () => {
-      const newFileContent = await Promise.all(
-        currFolderFiles.map(async (file) => {
+      const newFileContent = [];
+      if (currFolderFiles.length > 0) {
+        for (const file of currFolderFiles) {
           if (file.link) {
-            console.log("file: ", file.id);
             try {
               const fileAfterReading = await fetchData(
                 `http://localhost:3000/content/${file.id}/info`
               );
-              return fileAfterReading;
+              newFileContent.push(fileAfterReading);
             } catch (err) {
-              console.error(err);
-              return null;
+              console.error(`Error fetching file ${file.id}:`, err);
+              newFileContent.push(null);
             }
+          } else {
+            newFileContent.push(null);
           }
-          return null;
-        })
-      );
+        }
+      }
 
-      setFileContent(newFileContent);
       console.log("newFileContent: ", newFileContent);
-      console.log(fileContent);
+      setFileContent(newFileContent);
     };
 
     fetchDataAndUpdateFileContent();
-  }, [currFolderFiles, fetchData]);
+  }, [currFolderFiles, fetchData, id]);
 
   return (
     <>
       <button onClick={() => handleBack(currFolderFiles[0].currFolder)}>
         Back
       </button>
-      {Object.keys(currFolderFiles) !== 0 &&
-        currFolderFiles.length !== 0 &&
+      {Object.keys(currFolderFiles).length !== 0 &&
+      currFolderFiles.length !== 0 ? (
         currFolderFiles.map((file, index) => {
           console.log("content: ", fileContent[index]);
           if (!file.deleted) {
@@ -293,6 +326,8 @@ const Home = ({ sendRequestToDb }) => {
                 <button onClick={() => duplicateFile(file)}>
                   Duplicate File
                 </button>
+                <br />
+                <h4>{fileDetails}</h4>
                 {!file.link ? (
                   <button
                     style={{ backgroundColor: "violet" }}
@@ -306,7 +341,10 @@ const Home = ({ sendRequestToDb }) => {
             );
           }
           return null;
-        })}
+        })
+      ) : (
+        <p>No files found</p>
+      )}
       <Outlet />
     </>
   );
