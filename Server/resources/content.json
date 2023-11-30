@@ -12,8 +12,15 @@
       "userId": "1",
       "currFolder": "0",
       "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg",
-      "name": "file 1"
+      "link": "../files/file1.txt"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "name": "d",
+      "currFolder": "0",
+      "deleted": false,
+      "link": "../files/file1.txt"
     },
     {
       "id": "3",
@@ -21,7 +28,7 @@
       "name": "file 2",
       "currFolder": "0",
       "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+      "link": "../files/file1.txt"
     },
     {
       "id": "4",
@@ -36,7 +43,7 @@
       "name": "file1",
       "currFolder": "4",
       "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+      "link": "../files/file1.txt"
     },
     {
       "id": "6",
@@ -44,7 +51,7 @@
       "name": "file2",
       "currFolder": "4",
       "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+      "link": "../files/file1.txt"
     },
     {
       "id": "7",
@@ -52,7 +59,7 @@
       "name": "file3",
       "currFolder": "4",
       "deleted": false,
-      "link": "https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/advisor/wp-content/uploads/2023/09/getty_creative.jpeg.jpg"
+      "link": "../files/file1.txt"
     }
   ]
 }

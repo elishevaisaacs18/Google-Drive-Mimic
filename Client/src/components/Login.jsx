@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../assets/customHooks/useFetch.jsx";
 
-function Login({sendRequestToDb}) {
+function Login({ sendRequestToDb }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState(false);
@@ -27,11 +27,19 @@ function Login({sendRequestToDb}) {
   ];
 
   async function postUserDetails() {
-    const data = await sendRequestToDb("POST", `http://localhost:3000/users`, {
-      userName: username,
-      password: password,
-    });
-    return data;
+    try {
+      const data = await sendRequestToDb(
+        "POST",
+        `http://localhost:3000/users/confirm-login`,
+        {
+          userName: username,
+          password: password,
+        }
+      );
+      return data;
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
   async function handleSubmit(e) {
