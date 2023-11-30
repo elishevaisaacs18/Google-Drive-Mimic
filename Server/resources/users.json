@@ -9,21 +9,6 @@
       "id": 2,
       "userName": "eli",
       "password": "isaacs"
-    },
-    {
-      "id": 3,
-      "userName": "Bret",
-      "password": "hildegard.org"
-    },
-    {
-      "id": 4,
-      "userName": "s",
-      "password": "aaa"
-    },
-    {
-      "id": 5,
-      "userName": "ddd",
-      "password": "cc"
     }
   ]
 }
