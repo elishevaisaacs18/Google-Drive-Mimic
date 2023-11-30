@@ -37,12 +37,12 @@ router.get("/:id", async function (req, res, next) {
 router.get("/:id/info", async function (req, res, next) {
   const id = req.params.id;
   try {
-    console.log('GET INFO', id)
+    console.log("GET INFO", id);
     const result = await findContentBy("id", id);
-    console.log('id: ', id)
-    console.log('result: ', result)
+    console.log("id: ", id);
+    console.log("result: ", result);
     const data = await readFile(path.join(__dirname, result[0].link), "utf-8");
-    console.log('data: ', data)
+    console.log("data: ", data);
     // res.writeHead(200, { "Content-Type": "text/plain" });
     res.send(data);
   } catch (err) {
@@ -142,36 +142,32 @@ router.post("/", async (req, res) => {
 });
 
 async function addContent(reqBody) {
-    const filePath = path.join(__dirname, "../resources/content.json");
-  
-    try {
-      const rawData = await readFile(filePath, "utf-8");
-      const data = JSON.parse(rawData);
-      const newId = data.content.length + 1;
-  console.log(reqBody)
-      const newContent = {
-        id: `${newId}`,
-        userId: reqBody.userId,
-        name: reqBody.name,
-        currFolder: reqBody.currFolder,
-        link: reqBody.link,
-        deleted: false,
-      };
-  
-      data.content.push(newContent);
-  
-      await writeFile(
-        filePath,
-        JSON.stringify(data, null, 2),
-        "utf-8"
-      );
-  
-      return newContent;
-    } catch (error) {
-      // Log or handle the error appropriately
-      console.error(error); // Log the error details
-      throw new Error(`Error adding content: ${error.message}`);
-    }
+  const filePath = path.join(__dirname, "../resources/content.json");
+
+  try {
+    const rawData = await readFile(filePath, "utf-8");
+    const data = JSON.parse(rawData);
+    const newId = data.content.length + 1;
+    console.log(reqBody);
+    const newContent = {
+      id: newId,
+      userId: reqBody.userId,
+      name: reqBody.name,
+      currFolder: reqBody.currFolder,
+      link: reqBody.link,
+      deleted: false,
+    };
+
+    data.content.push(newContent);
+
+    await writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
+
+    return newContent;
+  } catch (error) {
+    // Log or handle the error appropriately
+    console.error(error); // Log the error details
+    throw new Error(`Error adding content: ${error.message}`);
   }
+}
 
 module.exports = router;

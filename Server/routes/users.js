@@ -79,4 +79,43 @@ async function findUserBy(id) {
   }
 }
 
+router.post("/", async (req, res) => {
+  try {
+    const schema = Joi.object({
+      userName: Joi.string().required(),
+      password: Joi.string().required(),
+    });
+    const validationResult = schema.validate(req.body);
+    if (validationResult.error) {
+      return res.status(400).send(validationResult.error.details[0].message);
+    }
+    const addedUser = await addUser(req.body);
+    res.status(200).send(addedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+async function addUser(reqBody) {
+  const rawData = await fsPromises.readFile(
+    path.join(__dirname, "../resources/users.json"),
+    "utf-8"
+  );
+  const data = JSON.parse(rawData);
+  const newId = data.users.length + 1;
+  const newUser = {
+    id: newId,
+    userName: reqBody.userName,
+    password: reqBody.password,
+  };
+  data.users.push(newUser);
+  await fsPromises.writeFile(
+    path.join(__dirname, "../resources/users.json"),
+    JSON.stringify(data, null, 2),
+    "utf-8"
+  );
+  return newUser;
+}
+
 module.exports = router;
